@@ -1,8 +1,10 @@
-const modalProduct = document.querySelector('.modal_product'); // модалка продукта
-const catalogList = document.querySelector('.catalog__list'); // список продуктов
+import { modalProduct, catalogList } from "./elements.js"
+import { navigationListController } from "./navigationListController.js";
+import { openModal } from "./openModal.js";
+import { renderListProduct } from "./renderListProduct.js";
 
 //тестовые данные
-const product = {
+const burgerMax = {
     title: 'Бургер Макс',
     price: 10000,
     weight: 5000,
@@ -18,40 +20,12 @@ const product = {
     ]
 };
 
-const modalProductTitle = document.querySelector('.modal-product__title');
-const modalProductImage = document.querySelector('.modal-product__image');
-const modalProductDescription = document.querySelector('.modal-product__description');
-const ingredientsList = document.querySelector('.ingredients__list');
-const ingredientsCalories = document.querySelector('.ingredients__calories');
-const modalProductPriceCount = document.querySelector('.modal-product__price-count');
-
-modalProductTitle.textContent = product.title;
-modalProductDescription.textContent = product.descriptions;
-modalProductPriceCount.textContent = product.price;
-modalProductImage.src = product.image;
-
-let weight = product.weight;
-let calories = product.calories;
-let infoWeightCalories = weight + 'г, ккал ' + calories;
-ingredientsCalories.textContent = infoWeightCalories;
-
-ingredientsList.textContent = '';
-const ingredientsListItem = product.ingredients.map((item) => {
-    const li = document.createElement('li');
-    li.classList.add('ingredients__item');
-    li.textContent = item;
-
-    return li;
-});
-ingredientsList.append(...ingredientsListItem); // точки, чтобы вытащить li из массива
-
-
 
 // обработка клика внутри всех карточек по '.product__detail'
 catalogList.addEventListener('click', (event) => {
     const target = event.target;
-    if (target.closest('.product__detail')) {
-        modalProduct.classList.add('modal_open');
+    if (target.closest('.product__detail') || target.closest('.product__image')) {
+        openModal(burgerMax);
     }
 });
 
@@ -62,3 +36,10 @@ modalProduct.addEventListener('click', (event) => {
         modalProduct.classList.remove('modal_open');
     }
 })
+
+const init = () => {
+    renderListProduct();
+    navigationListController();
+};
+
+init();

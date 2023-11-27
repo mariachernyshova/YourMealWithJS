@@ -20,12 +20,12 @@ const burgerMax = {
     ]
 };
 
-
 // обработка клика внутри всех карточек по '.product__detail'
 catalogList.addEventListener('click', (event) => {
     const target = event.target;
     if (target.closest('.product__detail') || target.closest('.product__image')) {
-        openModal(burgerMax);
+        const id = target.closest('.product').dataset.idProduct;
+        openModal(id);
     }
 });
 

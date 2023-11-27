@@ -87,6 +87,12 @@ const cartController = () => {
         }
     })
 
+    orderList.addEventListener('click', ({target}) => {
+        if (target.closest('.count__plus')) {
+            addCart(target.closest('.order__item').dataset.idProduct);
+        }
+    })
+
     modalProductBtn.addEventListener('click', () => {
         addCart(
             modalProductBtn.dataset.idProduct, 

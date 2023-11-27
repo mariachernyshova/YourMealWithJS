@@ -6,7 +6,8 @@ import {
     modalProductImage, 
     modalProductDescription, 
     ingredientsCalories, 
-    modalProductPriceCount 
+    modalProductPriceCount, 
+    modalProductBtn
 } from "./elements.js";
 import { getData } from "./getData.js";
 
@@ -29,6 +30,8 @@ export const openModal = async (id) => {
         return li;
     });
     ingredientsList.append(...ingredientsListItem); // точки, чтобы вытащить li из массива
+    modalProductBtn.dataset.idProduct = product.id;
+
 
     modalProduct.classList.add('modal_open');
 };

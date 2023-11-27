@@ -78,10 +78,14 @@ const addCart = (id, count = 1) => {
 
 const removeCart = (id) => {
     const cartList = getCart();
-    const product = cartList.find((item) => item.id === id);
+    const productIndex = cartList.findIndex((item) => item.id === id);
 
+    const product = cartList[productIndex];
     if (product.count > 1) {
         product.count -= 1;
+    } else {
+        cartList.splice(productIndex, 1);
+        console.log('cartList: ', cartList);
     }
 
     updateCartList(cartList);

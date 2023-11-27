@@ -77,7 +77,14 @@ const addCart = (id, count = 1) => {
 };
 
 const removeCart = (id) => {
- // удалять методом slice
+    const cartList = getCart();
+    const product = cartList.find((item) => item.id === id);
+
+    if (product.count > 1) {
+        product.count -= 1;
+    }
+
+    updateCartList(cartList);
 };
 
 const cartController = () => {
@@ -90,6 +97,11 @@ const cartController = () => {
     orderList.addEventListener('click', ({target}) => {
         if (target.closest('.count__plus')) {
             addCart(target.closest('.order__item').dataset.idProduct);
+        }
+
+        if (target.closest('.count__minus')) {
+            const targetId = target.closest('.order__item').dataset.idProduct;
+            removeCart(target.closest('.order__item').dataset.idProduct);
         }
     })
 

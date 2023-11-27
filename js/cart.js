@@ -1,5 +1,5 @@
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
-import { catalogList, countAmount, modalProductBtn, orderCount, orderList } from "./elements.js";
+import { catalogList, countAmount, modalProductBtn, orderCount, orderList, orderTotalAmount } from "./elements.js";
 import { getData } from "./getData.js";
 
 export const getCart = () => {
@@ -18,6 +18,12 @@ const renderCartList = async () => {
 
     const countProduct = cartList.reduce((acc, item) => acc + item.count, 0);
     orderCount.textContent = countProduct;
+
+    const countTotalAmount = cartList.reduce((acc, item) => {
+        const currenProduct = data.find(pr => pr.id === item.id);
+        return acc + currenProduct.price*item.count;
+    }, 0);
+    orderTotalAmount.textContent = countTotalAmount;
 
     const cartItems = data.map(item => {
         const li = document.createElement('li');
@@ -58,7 +64,6 @@ const updateCartList = (cartList) => {
 };
 
 const addCart = (id, count = 1) => {
-    console.log('id: ', id, count);
     const cartList = getCart();
     const product = cartList.find((item) => item.id === id);
 

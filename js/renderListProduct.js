@@ -3,10 +3,10 @@ import { createCardProduct } from "./createCardProduct.js";
 import { catalogList } from "./elements.js";
 import { getData } from "./getData.js"
 
-export const renderListProduct = async () => {
+export const renderListProduct = async (category = 'burger') => {
     catalogList.textContent = ''; // очистка всего списка
 
-    const listProduct = await getData(`${API_URL}${PREFIX_PRODUCT}`);
+    const listProduct = await getData(`${API_URL}${PREFIX_PRODUCT}?category=${category}`);
     const listCard = listProduct.map(createCardProduct);
 
     catalogList.append(...listCard);

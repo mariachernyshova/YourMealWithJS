@@ -21,11 +21,10 @@ const renderCartList = async () => {
     const countProduct = cartList.reduce((acc, item) => acc + item.count, 0);
     orderCount.textContent = countProduct;
 
-    const countTotalAmount = cartList.reduce((acc, item) => {
-        const currenProduct = data.find(pr => pr.id === item.id);
-        return acc + currenProduct.price*item.count;
+    orderTotalAmount.textContent = cartList.reduce((acc, item) => {
+        const currentProduct = data.find(pr => pr.id === item.id);
+        return acc + (currentProduct.price * item.count);
     }, 0);
-    orderTotalAmount.textContent = countTotalAmount;
 
     const cartItems = data.map(item => {
         const li = document.createElement('li');
@@ -45,11 +44,11 @@ const renderCartList = async () => {
             </div>
 
             <div class="order__product-count count">
-                <button class="count__minus">-</button>
+                <button class="count__minus" data-id-product=${product.id}>-</button>
 
                 <p class="count__amount">${product.count}</p>
 
-                <button class="count__plus">+</button>
+                <button class="count__plus" data-id-product=${product.id}>+</button>
             </div>
         `;
 
@@ -82,12 +81,9 @@ const removeCart = (id) => {
     const cartList = getCart();
     const productIndex = cartList.findIndex((item) => item.id === id);
 
-    const product = cartList[productIndex];
-    if (product.count > 1) {
-        product.count -= 1;
-    } else {
+    cartList[productIndex].count -= 1;
+    if (cartList[productIndex].count < 1) {
         cartList.splice(productIndex, 1);
-        console.log('cartList: ', cartList);
     }
 
     updateCartList(cartList);
@@ -101,13 +97,15 @@ const cartController = () => {
     })
 
     orderList.addEventListener('click', ({target}) => {
-        if (target.closest('.count__plus')) {
-            addCart(target.closest('.order__item').dataset.idProduct);
+        const targetPlus = target.closest('.count__plus');
+        const targetMinus = target.closest('.count__minus');
+
+        if (targetPlus) {
+            addCart(targetPlus.dataset.idProduct);
         }
 
-        if (target.closest('.count__minus')) {
-            const targetId = target.closest('.order__item').dataset.idProduct;
-            removeCart(target.closest('.order__item').dataset.idProduct);
+        if (targetMinus) {
+            removeCart(targetMinus.dataset.idProduct);
         }
     })
 

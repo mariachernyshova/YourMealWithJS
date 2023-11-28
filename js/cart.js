@@ -1,6 +1,7 @@
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
-import { catalogList, countAmount, modalProductBtn, order, orderCount, orderList, orderSubmit, orderTotalAmount, orderWrapTitle } from "./elements.js";
+import { catalogList, countAmount, modalDelivery, modalProductBtn, order, orderCount, orderList, orderSubmit, orderTotalAmount, orderWrapTitle } from "./elements.js";
 import { getData } from "./getData.js";
+import { orderController } from "./orderController.js";
 
 export const getCart = () => {
     const cartList = localStorage.getItem('cart');
@@ -111,6 +112,20 @@ const cartController = () => {
         }
     })
 
+    orderWrapTitle.addEventListener('click', () => {
+        order.classList.toggle('order_open');
+    })
+
+    orderSubmit.addEventListener('click', () => {
+        modalDelivery.classList.add('modal_open');
+    })
+
+    modalDelivery.addEventListener('click', ({target}) => {
+        if (target.closest('.modal__close') || modalDelivery === target) {
+            modalDelivery.classList.remove('modal_open');
+        }
+    })
+
     modalProductBtn.addEventListener('click', () => {
         addCart(
             modalProductBtn.dataset.idProduct, 
@@ -118,12 +133,10 @@ const cartController = () => {
             );
     })
 
-    orderWrapTitle.addEventListener('click', () => {
-        order.classList.toggle('order_open');
-    })
 };
 
 export const cartInit = () => {
     cartController();
     renderCartList();
+    orderController();
 }

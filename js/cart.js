@@ -1,5 +1,5 @@
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
-import { catalogList, countAmount, modalProductBtn, order, orderCount, orderList, orderTotalAmount, orderWrapTitle } from "./elements.js";
+import { catalogList, countAmount, modalProductBtn, order, orderCount, orderList, orderSubmit, orderTotalAmount, orderWrapTitle } from "./elements.js";
 import { getData } from "./getData.js";
 
 export const getCart = () => {
@@ -13,6 +13,8 @@ export const getCart = () => {
 
 const renderCartList = async () => {
     const cartList = getCart();
+    orderSubmit.disabled = !cartList.length;
+
     const allIdProduct = cartList.map(item => item.id);
     const data = cartList.length
         ? await getData(`${API_URL}${PREFIX_PRODUCT}?list=${allIdProduct}`) 

@@ -12,6 +12,7 @@
   background: #FFFFFF;
   border-radius: 12px;
   padding: 16px 10px;
+  z-index: 10;
 }
 
 .order__wrap-title {
@@ -19,6 +20,11 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.order__wrap-title:hover .order__title {
+  color: #FFAB08;
 }
 
 .order__title {
@@ -165,6 +171,11 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
+    cursor: default;
+  }
+
+  .order__wrap-title:hover .order__title {
+    color: inherit;
   }
 
   .order__title {

@@ -1,5 +1,5 @@
 import { API_URL, PREFIX_PRODUCT } from "./const.js";
-import { catalogList, countAmount, modalProductBtn, orderCount, orderList, orderTotalAmount } from "./elements.js";
+import { catalogList, countAmount, modalProductBtn, order, orderCount, orderList, orderTotalAmount, orderWrapTitle } from "./elements.js";
 import { getData } from "./getData.js";
 
 export const getCart = () => {
@@ -114,6 +114,10 @@ const cartController = () => {
             modalProductBtn.dataset.idProduct, 
             parseInt(countAmount.textContent)
             );
+    })
+
+    orderWrapTitle.addEventListener('click', () => {
+        order.classList.toggle('order_open');
     })
 };
 

@@ -14,7 +14,9 @@ export const getCart = () => {
 const renderCartList = async () => {
     const cartList = getCart();
     const allIdProduct = cartList.map(item => item.id);
-    const data = await getData(`${API_URL}${PREFIX_PRODUCT}?list=${allIdProduct}`);
+    const data = cartList.length
+        ? await getData(`${API_URL}${PREFIX_PRODUCT}?list=${allIdProduct}`) 
+        : [];
 
     const countProduct = cartList.reduce((acc, item) => acc + item.count, 0);
     orderCount.textContent = countProduct;
